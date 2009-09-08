@@ -32,35 +32,35 @@ $modx->initialize('mgr');
 $modx->setLogLevel(MODX_LOG_LEVEL_INFO);
 $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 
-$name = 'component-template';
+$name = 'getpage';
 $version = '1.0.0';
 $release = 'beta';
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
 $builder->createPackage($name, $version, $release);
-$builder->registerNamespace('component-template',false,true);
+//$builder->registerNamespace('getpage',false,true);
 
 
 // get the source from the actual snippet in your database OR
 // manually create the object, grabbing the source from a file
 $c= $modx->newObject('modSnippet');
-$c->set('name', 'component-template');
-$c->set('description', '<strong>1.0</strong> This is a component template for MODx Revolution');
+$c->set('name', 'getPage');
+$c->set('description', '<strong>' . $version . '-' . $release . '</strong> A generic wrapper snippet for returning paged results and navigation from snippets that return limitable collections.');
 $c->set('category', 0);
-$c->set('snippet', file_get_contents($sources['assets'] . 'snippet.component-template.php'));
+$c->set('snippet', file_get_contents($sources['assets'] . 'snippet.getpage.php'));
 
 // create a transport vehicle for the data object
 $attributes= array(XPDO_TRANSPORT_UNIQUE_KEY => 'name');
 $vehicle = $builder->createVehicle($c, $attributes);
 $vehicle->resolve('file',array(
-    'source' => $sources['assets'] . 'component-template',
+    'source' => $sources['assets'] . 'getpage',
     'target' => "return MODX_CORE_PATH . 'components/';",
 ));
 $builder->putVehicle($vehicle);
 
 // load lexicon strings
-$builder->buildLexicon($sources['lexicon']);
+//$builder->buildLexicon($sources['lexicon']);
 
 // zip up the package
 $builder->pack();
