@@ -72,5 +72,6 @@ $tend= $mtime;
 $totalTime= ($tend - $tstart);
 $totalTime= sprintf("%2.4f s", $totalTime);
 
-$modx->log(MODX_LOG_LEVEL_INFO,"Package Built.\nExecution time: {$totalTime}");
+$modx->log(MODX_LOG_LEVEL_INFO, "Package Built Successfully.");
+$modx->log(MODX_LOG_LEVEL_INFO, "Execution time: {$totalTime}");
 exit();
