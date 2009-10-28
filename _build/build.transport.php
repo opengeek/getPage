@@ -29,7 +29,7 @@ require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
 
 $modx= new modX();
 $modx->initialize('mgr');
-$modx->setLogLevel(MODX_LOG_LEVEL_INFO);
+$modx->setLogLevel(modX::LOG_LEVEL_INFO);
 $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 
 $name = 'getpage';
@@ -51,7 +51,7 @@ $c->set('category', 0);
 $c->set('snippet', file_get_contents($sources['assets'] . 'snippet.getpage.php'));
 
 // create a transport vehicle for the data object
-$attributes= array(XPDO_TRANSPORT_UNIQUE_KEY => 'name');
+$attributes= array(xPDOTransport::UNIQUE_KEY => 'name');
 $vehicle = $builder->createVehicle($c, $attributes);
 $vehicle->resolve('file',array(
     'source' => $sources['assets'] . 'getpage',
@@ -72,6 +72,6 @@ $tend= $mtime;
 $totalTime= ($tend - $tstart);
 $totalTime= sprintf("%2.4f s", $totalTime);
 
-$modx->log(MODX_LOG_LEVEL_INFO, "Package Built Successfully.");
-$modx->log(MODX_LOG_LEVEL_INFO, "Execution time: {$totalTime}");
+$modx->log(modX::LOG_LEVEL_INFO, "Package Built Successfully.");
+$modx->log(modX::LOG_LEVEL_INFO, "Execution time: {$totalTime}");
 exit();
