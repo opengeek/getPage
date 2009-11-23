@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package getpage
+ */
 function getpage_buildControls(& $modx, $properties) {
     $nav = array();
     $qs = !empty($properties['qs']) ? $properties['qs'] : array();

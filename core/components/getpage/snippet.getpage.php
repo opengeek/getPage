@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package getpage
+ */
 $output = '';
 
 $properties =& $scriptProperties;
@@ -23,7 +26,7 @@ if ($elementObj) {
     $output = $elementObj->process($properties);
 }
 
-include_once($modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php');
+include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
 
 $qs = array();
 

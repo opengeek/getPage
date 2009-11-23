@@ -1,6 +1,7 @@
 <?php
 /**
- * @package tlc
+ * @package getpage
+ * @subpackage build
  */
 $properties = array(
     array(
