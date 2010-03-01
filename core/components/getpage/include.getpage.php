@@ -32,9 +32,9 @@ function getpage_buildControls(& $modx, $properties) {
 }
 
 function getpage_makeUrl(& $modx, $properties, $pageNo, $tpl) {
-    $qs = implode('&', $properties['qs']);
-    if (!empty ($qs)) $qs.= '&';
-    $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', $qs . "{$properties['pageVarKey']}={$pageNo}");
+    $qs = $properties['qs'];
+    $qs[$properties['pageVarKey']] = $pageNo;
+    $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', $qs);
     $properties['pageNo'] = $pageNo;
     $nav= $modx->newObject('modChunk')->process($properties, $tpl);
     return $nav;

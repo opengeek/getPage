@@ -23,12 +23,14 @@ $properties['pageNextTpl'] = empty($pageNextTpl) ? "<li class=\"control\"><a[[+t
 
 $elementObj = $modx->getObject($properties['elementClass'], array('name' => $properties['element']));
 if ($elementObj) {
+    $elementObj->setCacheable(false);
     $output = $elementObj->process($properties);
 }
 
 include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
 
-$qs = array();
+$qs = $modx->request->getParameters();
+$properties['qs'] =& $qs;
 
 $totalSet = $modx->getPlaceholder($properties['totalVar']);
 $properties['total'] = (($totalSet = intval($totalSet)) ? $totalSet : $properties['total']);
@@ -36,16 +38,13 @@ $properties['pageCount'] = ($properties['total'] && $properties['limit'] ? ceil(
 if (empty($properties['total']) || empty($properties['limit']) || $properties['total'] <= $properties['limit']) {
     $properties['page'] = 1;
 } else {
-    $properties['qs'] = array();
     $properties[$properties['pageNavVar']] = getpage_buildControls($modx, $properties);
     if ($properties['page'] > 1) {
-        $qs[] = "{$properties['pageVarKey']}={$properties['page']}";
+        $qs[$properties['pageVarKey']] = $properties['page'];
     }
 }
 
-$queryString = !empty($qs) ? implode('&', $qs) : '';
-$properties['qs'] = $queryString;
-$properties['pageUrl'] = $modx->makeUrl($modx->resource->get('id'), '', $queryString);
+$properties['pageUrl'] = $modx->makeUrl($modx->resource->get('id'), '', $qs);
 
 $modx->setPlaceholders($properties, $properties['namespace']);
 
