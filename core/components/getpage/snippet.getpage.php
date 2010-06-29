@@ -19,33 +19,58 @@ $properties['pageFirstTpl'] = empty($pageFirstTpl) ? "<li class=\"control\"><a[[
 $properties['pageLastTpl'] = empty($pageLastTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">Last</a></li>" : $pageLastTpl;
 $properties['pagePrevTpl'] = empty($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;
 $properties['pageNextTpl'] = empty($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
+$properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', $properties, false);
+$properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', $properties, 'default');
+$properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', $properties, 'xPDOFileCache');
+$properties[xPDO::OPT_CACHE_EXPIRES] = (integer) $modx->getOption(xPDO::OPT_CACHE_EXPIRES, $properties, 0);
 
-
-$elementObj = $modx->getObject($properties['elementClass'], array('name' => $properties['element']));
-if ($elementObj) {
-    $elementObj->setCacheable(false);
-    $output = $elementObj->process($properties);
+if ($properties['cache']) {
+    $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(implode('', $modx->request->getParameters()));
+    $properties['cacheOptions'] = array(
+        xPDO::OPT_CACHE_KEY => $properties[xPDO::OPT_CACHE_KEY],
+        xPDO::OPT_CACHE_HANDLER => $properties[xPDO::OPT_CACHE_HANDLER],
+        xPDO::OPT_CACHE_EXPIRES => $properties[xPDO::OPT_CACHE_EXPIRES],
+    );
 }
-
-include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
-
-$qs = $modx->request->getParameters();
-$properties['qs'] =& $qs;
-
-$totalSet = $modx->getPlaceholder($properties['totalVar']);
-$properties['total'] = (($totalSet = intval($totalSet)) ? $totalSet : $properties['total']);
-$properties['pageCount'] = ($properties['total'] && $properties['limit'] ? ceil($properties['total'] / $properties['limit']) : 1);
-if (empty($properties['total']) || empty($properties['limit']) || $properties['total'] <= $properties['limit']) {
-    $properties['page'] = 1;
-} else {
-    $properties[$properties['pageNavVar']] = getpage_buildControls($modx, $properties);
-    if ($properties['page'] > 1) {
-        $qs[$properties['pageVarKey']] = $properties['page'];
+$cached = false;
+if ($properties['cache']) {
+    if ($modx->getCacheManager()) {
+        $cached = $modx->cacheManager->get($properties['cachePageKey'], $properties['cacheOptions']);
     }
 }
+if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])) {
+    $elementObj = $modx->getObject($properties['elementClass'], array('name' => $properties['element']));
+    if ($elementObj) {
+        $elementObj->setCacheable(false);
+        $output = $elementObj->process($properties);
+    }
 
-$properties['pageUrl'] = $modx->makeUrl($modx->resource->get('id'), '', $qs);
+    include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
 
+    $qs = $modx->request->getParameters();
+    $properties['qs'] =& $qs;
+
+    $totalSet = $modx->getPlaceholder($properties['totalVar']);
+    $properties['total'] = (($totalSet = intval($totalSet)) ? $totalSet : $properties['total']);
+    $properties['pageCount'] = ($properties['total'] && $properties['limit'] ? ceil($properties['total'] / $properties['limit']) : 1);
+    if (empty($properties['total']) || empty($properties['limit']) || $properties['total'] <= $properties['limit']) {
+        $properties['page'] = 1;
+    } else {
+        $properties[$properties['pageNavVar']] = getpage_buildControls($modx, $properties);
+        if ($properties['page'] > 1) {
+            $qs[$properties['pageVarKey']] = $properties['page'];
+        }
+    }
+
+    $properties['pageUrl'] = $modx->makeUrl($modx->resource->get('id'), '', $qs);
+    if ($properties['cache'] && $modx->getCacheManager()) {
+        $cached = array('properties' => $properties, 'output' => $output);
+        $modx->cacheManager->set($properties['cachePageKey'], $cached, $properties[xPDO::OPT_CACHE_EXPIRES], $properties['cacheOptions']);
+    }
+} else {
+    $properties = $cached['properties'];
+    $output = $cached['output'];
+}
 $modx->setPlaceholders($properties, $properties['namespace']);
 
 return $output;

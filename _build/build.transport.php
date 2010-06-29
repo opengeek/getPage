@@ -4,8 +4,8 @@
  *
  * @package getpage
  * @subpackage build
- * @version 1.0.0
- * @author Jason Coward <jason@collabpad.com>
+ * @version 1.0.0-rc1
+ * @author Jason Coward <jason@modxcms.com>
  */
 $mtime = microtime();
 $mtime = explode(" ", $mtime);
@@ -26,7 +26,7 @@ unset($root);
 /* package defines */
 define('PKG_NAME','getPage');
 define('PKG_VERSION','1.0.0');
-define('PKG_RELEASE','beta2');
+define('PKG_RELEASE','rc1');
 define('PKG_LNAME',strtolower(PKG_NAME));
 
 // override with your own defines here (see build.config.sample.php)
@@ -68,6 +68,12 @@ unset($properties,$snippet,$vehicle);
 
 /* load lexicon strings */
 //$builder->buildLexicon($sources['lexicon']);
+
+/* now pack in the license file, readme and setup options */
+$builder->setPackageAttributes(array(
+    'license' => file_get_contents($sources['source_core'] . '/docs/license.txt'),
+    'readme' => file_get_contents($sources['source_core'] . '/docs/readme.txt'),
+));
 
 /* zip up the package */
 $builder->pack();

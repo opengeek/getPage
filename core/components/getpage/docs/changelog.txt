@@ -1,0 +1,14 @@
+Changelog for getPage.
+
+getPage 1.0.0-rc1 (June 29, 2010)
+====================================
+- Add per page caching capabilities
+- Add changelog, license, and readme
+
+getPage 1.0.0-beta2 (May 28, 2010)
+====================================
+- Preserve additional query string parameters when creating paging navigation
+
+getPage 1.0.0-beta1 (March 19, 2010)
+====================================
+- Initial release
