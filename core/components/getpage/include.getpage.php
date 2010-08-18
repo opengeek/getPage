@@ -18,7 +18,11 @@ function getpage_buildControls(& $modx, $properties) {
                 }
             }
             if ($i >= $page - $pageLimit && $i <= $page + $pageLimit) {
-                $nav[$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
+                if ($i == $page) {
+                    $nav[$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl);
+                } else {
+                    $nav[$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
+                }
             }
             if ($i == $pageCount && $i != $page && !empty($pageLastTpl)) {
                 if (!empty($pageNextTpl) && ($page + 1) <= $pageCount) {

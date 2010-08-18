@@ -15,6 +15,7 @@ $properties['element'] = empty($element) ? '' : $element;
 $properties['elementClass'] = empty($elementClass) ? 'modChunk' : $elementClass;
 $properties['pageNavVar'] = empty($pageNavVar) ? 'page.nav' : $pageNavVar;
 $properties['pageNavTpl'] = empty($pageNavTpl) ? "<li[[+classes]]><a[[+classes]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageNavTpl;
+$properties['pageActiveTpl'] = empty($pageActiveTpl) ? "<li[[+activeClasses:default=` class=\"active\"`]]><a[[+activeClasses:default=` class=\"active\"`]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageActiveTpl;
 $properties['pageFirstTpl'] = empty($pageFirstTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">First</a></li>" : $pageFirstTpl;
 $properties['pageLastTpl'] = empty($pageLastTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">Last</a></li>" : $pageLastTpl;
 $properties['pagePrevTpl'] = empty($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;

@@ -4,7 +4,7 @@
  *
  * @package getpage
  * @subpackage build
- * @version 1.0.0-rc1
+ * @version 1.0.0-pl
  * @author Jason Coward <jason@modxcms.com>
  */
 $mtime = microtime();
@@ -26,7 +26,7 @@ unset($root);
 /* package defines */
 define('PKG_NAME','getPage');
 define('PKG_VERSION','1.0.0');
-define('PKG_RELEASE','rc1');
+define('PKG_RELEASE','pl');
 define('PKG_LNAME',strtolower(PKG_NAME));
 
 // override with your own defines here (see build.config.sample.php)

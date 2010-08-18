@@ -75,6 +75,13 @@ $properties = array(
         'value' => '<li[[+classes]]><a[[+classes]][[+title]] href="[[+href]]">[[+pageNo]]</a></li>',
     )
     ,array(
+        'name' => 'pageActiveTpl',
+        'desc' => 'Content representing the current page navigation control.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '<li[[+activeClasses]]><a[[+activeClasses:default=` class="active"`]][[+title]] href="[[+href]]">[[+pageNo]]</a></li>',
+    )
+    ,array(
         'name' => 'pageFirstTpl',
         'desc' => 'Content representing the first page navigation control.',
         'type' => 'textfield',
