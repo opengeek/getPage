@@ -2,6 +2,7 @@ Changelog for getPage.
 
 getPage 1.0.0-pl (August 18, 2010)
 ====================================
+- Add firstItem and lastItem properties/placeholders
 - Add pageActiveTpl to differentiate current page link
 
 getPage 1.0.0-rc1 (June 29, 2010)

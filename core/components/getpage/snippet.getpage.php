@@ -62,6 +62,9 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
             $qs[$properties['pageVarKey']] = $properties['page'];
         }
     }
+    
+    $properties['firstItem'] = $properties['offset'] + 1;
+    $properties['lastItem'] = ($properties['offset'] + $properties['limit'] + 1) < $totalSet ? ($properties['offset'] + $properties['limit'] + 1) : $totalSet;
 
     $properties['pageUrl'] = $modx->makeUrl($modx->resource->get('id'), '', $qs);
     if ($properties['cache'] && $modx->getCacheManager()) {
