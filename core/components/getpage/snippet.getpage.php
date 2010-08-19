@@ -64,7 +64,7 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
     }
     
     $properties['firstItem'] = $properties['offset'] + 1;
-    $properties['lastItem'] = ($properties['offset'] + $properties['limit'] + 1) < $totalSet ? ($properties['offset'] + $properties['limit'] + 1) : $totalSet;
+    $properties['lastItem'] = ($properties['offset'] + $properties['limit']) < $totalSet ? ($properties['offset'] + $properties['limit']) : $totalSet;
 
     $properties['pageUrl'] = $modx->makeUrl($modx->resource->get('id'), '', $qs);
     if ($properties['cache'] && $modx->getCacheManager()) {
