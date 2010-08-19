@@ -2,6 +2,7 @@ Changelog for getPage.
 
 getPage 1.0.0-pl (August 18, 2010)
 ====================================
+- Add support for snippets that send output toPlaceholder
 - Add firstItem and lastItem properties/placeholders
 - Add pageActiveTpl to differentiate current page link
 

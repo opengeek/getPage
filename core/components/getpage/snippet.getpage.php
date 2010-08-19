@@ -20,6 +20,7 @@ $properties['pageFirstTpl'] = empty($pageFirstTpl) ? "<li class=\"control\"><a[[
 $properties['pageLastTpl'] = empty($pageLastTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">Last</a></li>" : $pageLastTpl;
 $properties['pagePrevTpl'] = empty($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;
 $properties['pageNextTpl'] = empty($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
+$properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
 $properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', $properties, false);
 $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', $properties, 'default');
 $properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', $properties, 'xPDOFileCache');
@@ -43,7 +44,12 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
     $elementObj = $modx->getObject($properties['elementClass'], array('name' => $properties['element']));
     if ($elementObj) {
         $elementObj->setCacheable(false);
-        $output = $elementObj->process($properties);
+        if (!empty($properties['toPlaceholder'])) {
+            $elementObj->process($properties);
+            $output = $modx->getPlaceholder($properties['toPlaceholder']);
+        } else {
+            $output = $elementObj->process($properties);
+        }
     }
 
     include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
@@ -76,5 +82,9 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
     $output = $cached['output'];
 }
 $modx->setPlaceholders($properties, $properties['namespace']);
+if (!empty($properties['toPlaceholder'])) {
+    $modx->setPlaceholder($properties['toPlaceholder'], $output);
+    $output = '';
+}
 
 return $output;
