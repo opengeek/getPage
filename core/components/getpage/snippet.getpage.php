@@ -14,12 +14,12 @@ $properties['pageLimit'] = !empty($pageLimit) && ($pageLimit = intval($pageLimit
 $properties['element'] = empty($element) ? '' : $element;
 $properties['elementClass'] = empty($elementClass) ? 'modChunk' : $elementClass;
 $properties['pageNavVar'] = empty($pageNavVar) ? 'page.nav' : $pageNavVar;
-$properties['pageNavTpl'] = empty($pageNavTpl) ? "<li[[+classes]]><a[[+classes]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageNavTpl;
-$properties['pageActiveTpl'] = empty($pageActiveTpl) ? "<li[[+activeClasses:default=` class=\"active\"`]]><a[[+activeClasses:default=` class=\"active\"`]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageActiveTpl;
-$properties['pageFirstTpl'] = empty($pageFirstTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">First</a></li>" : $pageFirstTpl;
-$properties['pageLastTpl'] = empty($pageLastTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">Last</a></li>" : $pageLastTpl;
-$properties['pagePrevTpl'] = empty($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;
-$properties['pageNextTpl'] = empty($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
+$properties['pageNavTpl'] = !isset($pageNavTpl) ? "<li[[+classes]]><a[[+classes]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageNavTpl;
+$properties['pageActiveTpl'] = !isset($pageActiveTpl) ? "<li[[+activeClasses:default=` class=\"active\"`]]><a[[+activeClasses:default=` class=\"active\"`]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageActiveTpl;
+$properties['pageFirstTpl'] = !isset($pageFirstTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">First</a></li>" : $pageFirstTpl;
+$properties['pageLastTpl'] = !isset($pageLastTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">Last</a></li>" : $pageLastTpl;
+$properties['pagePrevTpl'] = !isset($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;
+$properties['pageNextTpl'] = !isset($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
 $properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', $properties, false);
 $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', $properties, 'default');
