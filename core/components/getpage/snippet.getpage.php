@@ -10,7 +10,7 @@ $properties['limit'] = (!empty($_REQUEST['limit']) && ($limit = intval($_REQUEST
 $properties['offset'] = (!empty($properties['limit']) && !empty($properties['page'])) ? ($properties['limit'] * ($properties['page'] - 1)) : 0;
 $properties['totalVar'] = empty($totalVar) ? "total" : $totalVar;
 $properties['total'] = !empty($properties['total']) && $total = intval($properties['total']) ? $total : 0;
-$properties['pageLimit'] = !empty($pageLimit) && ($pageLimit = intval($pageLimit)) ? $pageLimit : 5;
+$properties['pageLimit'] = isset($pageLimit) && is_numeric($pageLimit) ? intval($pageLimit) : 5;
 $properties['element'] = empty($element) ? '' : $element;
 $properties['elementClass'] = empty($elementClass) ? 'modChunk' : $elementClass;
 $properties['pageNavVar'] = empty($pageNavVar) ? 'page.nav' : $pageNavVar;

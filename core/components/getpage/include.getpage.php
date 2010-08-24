@@ -17,7 +17,7 @@ function getpage_buildControls(& $modx, $properties) {
                     $nav['prev'] = getpage_makeUrl($modx, $properties, $page - 1, $pagePrevTpl);
                 }
             }
-            if ($i >= $page - $pageLimit && $i <= $page + $pageLimit) {
+            if (empty($pageLimit) || ($i >= $page - $pageLimit && $i <= $page + $pageLimit)) {
                 if ($i == $page) {
                     $nav[$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl);
                 } else {
