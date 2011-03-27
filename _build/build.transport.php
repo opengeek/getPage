@@ -4,7 +4,7 @@
  *
  * @package getpage
  * @subpackage build
- * @version 1.0.0-pl
+ * @version 1.1.0-pl
  * @author Jason Coward <jason@modxcms.com>
  */
 $mtime = microtime();
@@ -25,7 +25,7 @@ unset($root);
 
 /* package defines */
 define('PKG_NAME','getPage');
-define('PKG_VERSION','1.0.0');
+define('PKG_VERSION','1.1.0');
 define('PKG_RELEASE','pl');
 define('PKG_LNAME',strtolower(PKG_NAME));
 
@@ -73,6 +73,7 @@ unset($properties,$snippet,$vehicle);
 $builder->setPackageAttributes(array(
     'license' => file_get_contents($sources['source_core'] . '/docs/license.txt'),
     'readme' => file_get_contents($sources['source_core'] . '/docs/readme.txt'),
+    'changelog' => file_get_contents($sources['source_core'] . '/docs/changelog.txt'),
 ));
 
 /* zip up the package */

@@ -109,6 +109,34 @@ $properties = array(
         'options' => '',
         'value' => '<li class="control"><a[[+classes]][[+title]] href="[[+href]]">&gt;&gt;</a></li>',
     )
+    ,array(
+        'name' => 'cache',
+        'desc' => 'If true, unique page requests will be cached according to addition cache properties.',
+        'type' => 'combo-boolean',
+        'options' => '',
+        'value' => false,
+    )
+    ,array(
+        'name' => 'cache_key',
+        'desc' => 'The key of the cache provider to use; leave empty to use the cache_resource_key cache partition (default is "resource").',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => false,
+    )
+    ,array(
+        'name' => 'cache_handler',
+        'desc' => 'The cache provider implementation to use; leave empty unless you are caching to a custom cache_key.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => false,
+    )
+    ,array(
+        'name' => 'cache_expires',
+        'desc' => 'The number of seconds before the cached pages expire and must be regenerated; leave empty to use the cache provider option for cache_expires.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => false,
+    )
 );
 
 return $properties;
