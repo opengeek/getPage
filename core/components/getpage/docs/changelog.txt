@@ -1,5 +1,7 @@
 Changelog for getPage.
 
+- Change default cacheKey property to use 'resource' (for MODX 2.1+)
+
 getPage 1.0.0-pl (August 18, 2010)
 ====================================
 - Add support for snippets that send output toPlaceholder

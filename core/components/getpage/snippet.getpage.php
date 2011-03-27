@@ -22,7 +22,7 @@ $properties['pagePrevTpl'] = empty($pagePrevTpl) ? "<li class=\"control\"><a[[+t
 $properties['pageNextTpl'] = empty($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
 $properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', $properties, false);
-$properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', $properties, 'default');
+$properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', $properties, 'resource');
 $properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', $properties, 'xPDOFileCache');
 $properties[xPDO::OPT_CACHE_EXPIRES] = (integer) $modx->getOption(xPDO::OPT_CACHE_EXPIRES, $properties, 0);
 
