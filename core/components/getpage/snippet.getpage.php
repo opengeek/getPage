@@ -21,10 +21,10 @@ $properties['pageLastTpl'] = empty($pageLastTpl) ? "<li class=\"control\"><a[[+t
 $properties['pagePrevTpl'] = empty($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;
 $properties['pageNextTpl'] = empty($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
-$properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', $properties, false);
-$properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', $properties, 'resource');
-$properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', $properties, 'xPDOFileCache');
-$properties[xPDO::OPT_CACHE_EXPIRES] = (integer) $modx->getOption(xPDO::OPT_CACHE_EXPIRES, $properties, 0);
+$properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', null, false);
+if (empty($cache_key)) $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', null, 'resource');
+if (empty($cache_handler)) $properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', null, 'xPDOFileCache');
+if (empty($cache_expires)) $properties[xPDO::OPT_CACHE_EXPIRES] = (integer) $modx->getOption('cache_resource_expires', null, 0);
 
 if ($properties['cache']) {
     $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(implode('', $modx->request->getParameters()));
