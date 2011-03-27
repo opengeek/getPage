@@ -73,6 +73,7 @@ unset($properties,$snippet,$vehicle);
 $builder->setPackageAttributes(array(
     'license' => file_get_contents($sources['source_core'] . '/docs/license.txt'),
     'readme' => file_get_contents($sources['source_core'] . '/docs/readme.txt'),
+    'changelog' => file_get_contents($sources['source_core'] . '/docs/changelog.txt'),
 ));
 
 /* zip up the package */
