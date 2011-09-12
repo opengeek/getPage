@@ -21,6 +21,7 @@ $properties['pageLastTpl'] = empty($pageLastTpl) ? "<li class=\"control\"><a[[+t
 $properties['pagePrevTpl'] = empty($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;
 $properties['pageNextTpl'] = empty($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
+$properties['makeUrl'] = !empty($makeUrl) ? $makeUrl : $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
 $properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', $properties, false);
 $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', $properties, 'default');
 $properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', $properties, 'xPDOFileCache');
@@ -52,7 +53,7 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
         }
     }
 
-    include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
+    include_once $properties['makeUrl'];
 
     $qs = $modx->request->getParameters();
     $properties['qs'] =& $qs;
@@ -68,7 +69,7 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
             $qs[$properties['pageVarKey']] = $properties['page'];
         }
     }
-    
+
     $properties['firstItem'] = $properties['offset'] + 1;
     $properties['lastItem'] = ($properties['offset'] + $properties['limit']) < $totalSet ? ($properties['offset'] + $properties['limit']) : $totalSet;
 
