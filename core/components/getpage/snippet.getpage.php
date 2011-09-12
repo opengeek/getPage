@@ -6,7 +6,7 @@ $output = '';
 
 $properties =& $scriptProperties;
 $properties['page'] = (isset($_REQUEST[$properties['pageVarKey']]) && ($page = intval($_REQUEST[$properties['pageVarKey']]))) ? $page : 1;
-$properties['limit'] = (!empty($_REQUEST['limit']) && ($limit = intval($_REQUEST['limit']))) ? $limit : intval($limit);
+$properties['limit'] = (isset($_REQUEST['limit'])) ? intval($_REQUEST['limit']) : intval($limit);
 $properties['offset'] = (!empty($properties['limit']) && !empty($properties['page'])) ? ($properties['limit'] * ($properties['page'] - 1)) : 0;
 $properties['totalVar'] = empty($totalVar) ? "total" : $totalVar;
 $properties['total'] = !empty($properties['total']) && $total = intval($properties['total']) ? $total : 0;

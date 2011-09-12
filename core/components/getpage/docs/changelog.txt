@@ -1,5 +1,6 @@
 Changelog for getPage.
 
+- Allow limit of 0 in $_REQUEST to bypass paging
 - Allow empty nav tpl parameters
 - Allow unlimited page listing with &pageLimit=`0`
 
