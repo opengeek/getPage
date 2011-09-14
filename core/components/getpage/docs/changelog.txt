@@ -1,5 +1,12 @@
 Changelog for getPage.
 
+getPage 1.2.0-pl (September 14, 2011)
+====================================
+- [#5] Add pageNavOuterTpl for layout control of page nav elements
+- Allow limit of 0 in $_REQUEST to bypass paging
+- Allow empty nav tpl parameters
+- Allow unlimited page listing with &pageLimit=`0`
+
 getPage 1.1.0-pl (March 27, 2011)
 ====================================
 - Change default cacheKey property to use 'resource' (for MODX 2.1+)

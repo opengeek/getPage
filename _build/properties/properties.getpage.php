@@ -75,6 +75,13 @@ $properties = array(
         'value' => '<li[[+classes]]><a[[+classes]][[+title]] href="[[+href]]">[[+pageNo]]</a></li>',
     )
     ,array(
+        'name' => 'pageNavOuterTpl',
+        'desc' => 'Content representing the layout of the page navigation controls.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '[[+first]][[+prev]][[+pages]][[+next]][[+last]]',
+    )
+    ,array(
         'name' => 'pageActiveTpl',
         'desc' => 'Content representing the current page navigation control.',
         'type' => 'textfield',

@@ -1,7 +1,7 @@
 --------------------
 Snippet: getPage
 --------------------
-Version: 1.1.0-pl
+Version: 1.2.0-pl
 Since: March 19, 2010
 Author: Jason Coward <jason@modxcms.com>
 
