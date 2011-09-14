@@ -18,10 +18,11 @@ function getpage_buildControls(& $modx, $properties) {
                 }
             }
             if (empty($pageLimit) || ($i >= $page - $pageLimit && $i <= $page + $pageLimit)) {
+                if (!array_key_exists('pages', $nav)) $nav['pages'] = array();
                 if ($i == $page) {
-                    $nav[$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl);
+                    $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl);
                 } else {
-                    $nav[$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
+                    $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
                 }
             }
             if ($i == $pageCount && $i != $page && !empty($pageLastTpl)) {
@@ -31,8 +32,9 @@ function getpage_buildControls(& $modx, $properties) {
                 $nav['last'] = getpage_makeUrl($modx, $properties, $i, $pageLastTpl);
             }
         }
+        $nav['pages'] = implode("\n", $nav['pages']);
     }
-    return implode("\n", $nav);
+    return $nav;
 }
 
 function getpage_makeUrl(& $modx, $properties, $pageNo, $tpl) {

@@ -15,6 +15,7 @@ $properties['element'] = empty($element) ? '' : $element;
 $properties['elementClass'] = empty($elementClass) ? 'modChunk' : $elementClass;
 $properties['pageNavVar'] = empty($pageNavVar) ? 'page.nav' : $pageNavVar;
 $properties['pageNavTpl'] = !isset($pageNavTpl) ? "<li[[+classes]]><a[[+classes]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageNavTpl;
+$properties['pageNavOuterTpl'] = !isset($pageNavOuterTpl) ? "[[+first]][[+prev]][[+pages]][[+next]][[+last]]" : $pageNavOuterTpl;
 $properties['pageActiveTpl'] = !isset($pageActiveTpl) ? "<li[[+activeClasses:default=` class=\"active\"`]]><a[[+activeClasses:default=` class=\"active\"`]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageActiveTpl;
 $properties['pageFirstTpl'] = !isset($pageFirstTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">First</a></li>" : $pageFirstTpl;
 $properties['pageLastTpl'] = !isset($pageLastTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">Last</a></li>" : $pageLastTpl;
@@ -63,7 +64,9 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
     if (empty($properties['total']) || empty($properties['limit']) || $properties['total'] <= $properties['limit']) {
         $properties['page'] = 1;
     } else {
-        $properties[$properties['pageNavVar']] = getpage_buildControls($modx, $properties);
+        $pageNav = getpage_buildControls($modx, $properties);
+        var_dump($pageNav);
+        $properties[$properties['pageNavVar']] = $modx->newObject('modChunk')->process(array_merge($properties, $pageNav), $properties['pageNavOuterTpl']);
         if ($properties['page'] > 1) {
             $qs[$properties['pageVarKey']] = $properties['page'];
         }
