@@ -1,5 +1,9 @@
 Changelog for getPage.
 
+getPage 1.2.1-pl (September 15, 2011)
+====================================
+- Remove inadvertent debugging statement in snippet code
+
 getPage 1.2.0-pl (September 14, 2011)
 ====================================
 - [#5] Add pageNavOuterTpl for layout control of page nav elements
