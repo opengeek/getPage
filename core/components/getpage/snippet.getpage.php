@@ -65,7 +65,6 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
         $properties['page'] = 1;
     } else {
         $pageNav = getpage_buildControls($modx, $properties);
-        var_dump($pageNav);
         $properties[$properties['pageNavVar']] = $modx->newObject('modChunk')->process(array_merge($properties, $pageNav), $properties['pageNavOuterTpl']);
         if ($properties['page'] > 1) {
             $qs[$properties['pageVarKey']] = $properties['page'];
