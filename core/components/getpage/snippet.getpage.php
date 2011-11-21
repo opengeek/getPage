@@ -23,6 +23,7 @@ $properties['pagePrevTpl'] = !isset($pagePrevTpl) ? "<li class=\"control\"><a[[+
 $properties['pageNextTpl'] = !isset($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
 $properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', null, false);
+$properties['inc_path'] = !empty($properties['inc_path']) ? $properties['inc_path'] : 'components/getpage/';
 if (empty($cache_key)) $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', null, 'resource');
 if (empty($cache_handler)) $properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', null, 'xPDOFileCache');
 if (empty($cache_expires)) $properties[xPDO::OPT_CACHE_EXPIRES] = (integer) $modx->getOption('cache_resource_expires', null, 0);
@@ -53,7 +54,7 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
         }
     }
 
-    include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
+    include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . $properties['inc_path'] . 'include.getpage.php';
 
     $qs = $modx->request->getParameters();
     $properties['qs'] =& $qs;
