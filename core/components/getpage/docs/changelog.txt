@@ -1,5 +1,7 @@
 Changelog for getPage.
 
+- [#6] Add pageOneLimit to allow different limit on first results page
+
 getPage 1.2.1-pl (September 15, 2011)
 ====================================
 - Remove inadvertent debugging statement in snippet code

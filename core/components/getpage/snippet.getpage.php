@@ -10,6 +10,8 @@ $properties['limit'] = (isset($_REQUEST['limit'])) ? intval($_REQUEST['limit']) 
 $properties['offset'] = (!empty($properties['limit']) && !empty($properties['page'])) ? ($properties['limit'] * ($properties['page'] - 1)) : 0;
 $properties['totalVar'] = empty($totalVar) ? "total" : $totalVar;
 $properties['total'] = !empty($properties['total']) && $total = intval($properties['total']) ? $total : 0;
+$properties['pageOneLimit'] = (!empty($pageOneLimit) && $pageOneLimit = intval($pageOneLimit)) ? $pageOneLimit : $properties['limit'];
+$properties['actualLimit'] = $properties['limit'];
 $properties['pageLimit'] = isset($pageLimit) && is_numeric($pageLimit) ? intval($pageLimit) : 5;
 $properties['element'] = empty($element) ? '' : $element;
 $properties['elementClass'] = empty($elementClass) ? 'modChunk' : $elementClass;
@@ -26,6 +28,10 @@ $properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOp
 if (empty($cache_key)) $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', null, 'resource');
 if (empty($cache_handler)) $properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', null, 'xPDOFileCache');
 if (empty($cache_expires)) $properties[xPDO::OPT_CACHE_EXPIRES] = (integer) $modx->getOption('cache_resource_expires', null, 0);
+
+if ($properties['page'] == 1 && $properties['pageOneLimit'] !== $properties['actualLimit']) {
+    $properties['limit'] = $properties['pageOneLimit'];
+}
 
 if ($properties['cache']) {
     $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(implode('', $modx->request->getParameters()));
@@ -60,8 +66,17 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
 
     $totalSet = $modx->getPlaceholder($properties['totalVar']);
     $properties['total'] = (($totalSet = intval($totalSet)) ? $totalSet : $properties['total']);
-    $properties['pageCount'] = ($properties['total'] && $properties['limit'] ? ceil($properties['total'] / $properties['limit']) : 1);
-    if (empty($properties['total']) || empty($properties['limit']) || $properties['total'] <= $properties['limit']) {
+    if (!empty($properties['total']) && !empty($properties['actualLimit'])) {
+        if ($properties['pageOneLimit'] !== $properties['actualLimit']) {
+            $adjustedTotal = $properties['total'] - $properties['pageOneLimit'];
+            $properties['pageCount'] = $adjustedTotal > 0 ? ceil($adjustedTotal / $properties['actualLimit']) + 1 : 1;
+        } else {
+            $properties['pageCount'] = ceil($properties['total'] / $properties['actualLimit']);
+        }
+    } else {
+        $properties['pageCount'] = 1;
+    }
+    if (empty($properties['total']) || empty($properties['actualLimit']) || $properties['total'] <= $properties['actualLimit'] || ($properties['page'] == 1 && $properties['total'] <= $properties['pageOneLimit'])) {
         $properties['page'] = 1;
     } else {
         $pageNav = getpage_buildControls($modx, $properties);
