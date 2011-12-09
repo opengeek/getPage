@@ -1,5 +1,7 @@
 Changelog for getPage.
 
+getPage 1.2.2-pl (December 9, 2011)
+====================================
 - Check $_GET before $_REQUEST for pageVarKey and limit overrides
 - [#6] Add pageOneLimit to allow different limit on first results page
 
