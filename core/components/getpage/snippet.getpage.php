@@ -5,8 +5,14 @@
 $output = '';
 
 $properties =& $scriptProperties;
-$properties['page'] = (isset($_REQUEST[$properties['pageVarKey']]) && ($page = intval($_REQUEST[$properties['pageVarKey']]))) ? $page : 1;
-$properties['limit'] = (isset($_REQUEST['limit'])) ? intval($_REQUEST['limit']) : intval($limit);
+$properties['page'] = (isset($_GET[$properties['pageVarKey']]) && ($page = intval($_GET[$properties['pageVarKey']]))) ? $page : null;
+if ($properties['page'] === null) {
+    $properties['page'] = (isset($_REQUEST[$properties['pageVarKey']]) && ($page = intval($_REQUEST[$properties['pageVarKey']]))) ? $page : 1;
+}
+$properties['limit'] = (isset($_GET['limit'])) ? intval($_GET['limit']) : null;
+if ($properties['limit'] === null) {
+    $properties['limit'] = (isset($_REQUEST['limit'])) ? intval($_REQUEST['limit']) : intval($limit);
+}
 $properties['offset'] = (!empty($properties['limit']) && !empty($properties['page'])) ? ($properties['limit'] * ($properties['page'] - 1)) : 0;
 $properties['totalVar'] = empty($totalVar) ? "total" : $totalVar;
 $properties['total'] = !empty($properties['total']) && $total = intval($properties['total']) ? $total : 0;
