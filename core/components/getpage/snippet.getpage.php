@@ -65,7 +65,7 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
         }
     }
 
-    include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
+    include_once $modx->getOption('getpage.core_path',$properties,$modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/').'include.getpage.php';
 
     $qs = $modx->request->getParameters();
     $properties['qs'] =& $qs;
