@@ -40,7 +40,7 @@ if ($properties['page'] == 1 && $properties['pageOneLimit'] !== $properties['act
 }
 
 if ($properties['cache']) {
-    $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(implode('', $modx->request->getParameters()));
+    $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()));
     $properties['cacheOptions'] = array(
         xPDO::OPT_CACHE_KEY => $properties[xPDO::OPT_CACHE_KEY],
         xPDO::OPT_CACHE_HANDLER => $properties[xPDO::OPT_CACHE_HANDLER],
