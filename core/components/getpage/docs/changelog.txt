@@ -1,5 +1,6 @@
 Changelog for getPage.
 
+- [#14] Avoid adding pageVarKey to query string when page = 1
 - [#12] Fix cacheKey when multi-dimensional arrays used in $_REQUEST
 
 getPage 1.2.2-pl (December 9, 2011)
