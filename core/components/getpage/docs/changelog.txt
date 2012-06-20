@@ -1,5 +1,7 @@
 Changelog for getPage.
 
+getPage 1.2.3-pl (June 20, 2012)
+====================================
 - [#15] Add ability to specify pageNavScheme for navigation links
 - [#14] Avoid adding pageVarKey to query string when page = 1
 - [#12] Fix cacheKey when multi-dimensional arrays used in $_REQUEST
