@@ -40,7 +40,7 @@ if ($properties['page'] == 1 && $properties['pageOneLimit'] !== $properties['act
 }
 
 if ($properties['cache']) {
-    $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(implode('', $modx->request->getParameters()));
+    $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()));
     $properties['cacheOptions'] = array(
         xPDO::OPT_CACHE_KEY => $properties[xPDO::OPT_CACHE_KEY],
         xPDO::OPT_CACHE_HANDLER => $properties[xPDO::OPT_CACHE_HANDLER],
@@ -65,7 +65,7 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
         }
     }
 
-    include_once $modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/include.getpage.php';
+    include_once $modx->getOption('getpage.core_path',$properties,$modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpage/').'include.getpage.php';
 
     $qs = $modx->request->getParameters();
     $properties['qs'] =& $qs;

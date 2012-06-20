@@ -4,8 +4,8 @@
  *
  * @package getpage
  * @subpackage build
- * @version 1.1.0-pl
- * @author Jason Coward <jason@modxcms.com>
+ * @version 1.2.3-pl
+ * @author Jason Coward <jason@modx.com>
  */
 $mtime = microtime();
 $mtime = explode(" ", $mtime);
@@ -25,7 +25,7 @@ unset($root);
 
 /* package defines */
 define('PKG_NAME','getPage');
-define('PKG_VERSION','1.2.2');
+define('PKG_VERSION','1.2.3');
 define('PKG_RELEASE','pl');
 define('PKG_LNAME',strtolower(PKG_NAME));
 

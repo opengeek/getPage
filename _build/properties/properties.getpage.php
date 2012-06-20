@@ -144,6 +144,13 @@ $properties = array(
         'options' => '',
         'value' => false,
     )
+    ,array(
+        'name' => 'pageNavScheme',
+        'desc' => 'Optionally specify a scheme for use when generating page navigation links; will use link_tag_scheme if empty or not specified (default is empty).',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+    )
 );
 
 return $properties;
