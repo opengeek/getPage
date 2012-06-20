@@ -44,7 +44,8 @@ function getpage_makeUrl(& $modx, $properties, $pageNo, $tpl) {
     } else {
         $qs[$properties['pageVarKey']] = $pageNo;
     }
-    $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', $qs);
+    $scheme = !empty($properties['pageNavScheme']) ? $properties['pageNavScheme'] : $modx->getOption('link_tag_scheme', $properties, -1);
+    $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', $qs, $scheme);
     $properties['pageNo'] = $pageNo;
     $nav= $modx->newObject('modChunk')->process($properties, $tpl);
     return $nav;
