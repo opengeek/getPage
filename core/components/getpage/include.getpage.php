@@ -9,6 +9,7 @@ function getpage_buildControls(& $modx, $properties) {
     $pageCount = !empty($properties['pageCount']) ? $properties['pageCount'] : 1;
     $pageLimit = $properties['pageLimit'];
     extract($properties, EXTR_SKIP);
+	$first_pages = $last_pages = 0;
     if ($pageCount > 1 && !empty($pageNavTpl)) {
         for ($i = 1; $i <= $pageCount; $i++) {
             if ($i == 1 && $i != $page && !empty($pageFirstTpl)) {
@@ -17,6 +18,7 @@ function getpage_buildControls(& $modx, $properties) {
                     $nav['prev'] = getpage_makeUrl($modx, $properties, $page - 1, $pagePrevTpl);
                 }
             }
+			
             if (empty($pageLimit) || ($i >= $page - $pageLimit && $i <= $page + $pageLimit)) {
                 if (!array_key_exists('pages', $nav)) $nav['pages'] = array();
                 if ($i == $page) {
@@ -25,6 +27,17 @@ function getpage_buildControls(& $modx, $properties) {
                     $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
                 }
             }
+			if ($showEdgePages && (!isset($nav['pages']) || !array_key_exists($i, $nav['pages']))) {
+				if ($i < $page && $first_pages < $pageLimit) {
+					$nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
+					$first_pages++;
+				}
+				else if ($i > $pageCount - $pageLimit && $last_pages < $pageLimit) {
+					$nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
+					$last_pages++;				
+				}
+			}
+			
             if ($i == $pageCount && $i != $page && !empty($pageLastTpl)) {
                 if (!empty($pageNextTpl) && ($page + 1) <= $pageCount) {
                     $nav['next'] = getpage_makeUrl($modx, $properties, $page + 1, $pageNextTpl);
@@ -32,6 +45,10 @@ function getpage_buildControls(& $modx, $properties) {
                 $nav['last'] = getpage_makeUrl($modx, $properties, $i, $pageLastTpl);
             }
         }
+		if ($showEdgePages) {
+			if ($first_pages == $pageLimit && !empty($pageSkipTpl)) {$nav['pages'][$page - $pageLimit] = $pageSkipTpl;}
+			if ($last_pages == $pageLimit && !empty($pageSkipTpl)) {$nav['pages'][$page + $pageLimit] = $pageSkipTpl;}
+		}
         $nav['pages'] = implode("\n", $nav['pages']);
     }
     return $nav;

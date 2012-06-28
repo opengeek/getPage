@@ -51,7 +51,7 @@ $properties = array(
         'desc' => 'The maximum number of pages to display when rendering paging controls',
         'type' => 'textfield',
         'options' => '',
-        'value' => '5',
+        'value' => '2',
     )
     ,array(
         'name' => 'elementClass',
@@ -150,6 +150,20 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => '',
+    )    
+	,array(
+        'name' => 'pageSkipTpl',
+        'desc' => 'Content representing the skipped pages in the beginning or ending of pagination.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '<li class="control">...</li>',
+    )    
+	,array(
+        'name' => 'showEdgePages',
+        'desc' => 'This parameter enable displaying first and last pages with skipped pages. Number of this pages are equal pageLimit. For example: pageLimit is 2, current page is 6 and total pages is 51 will display: 1 2 ... 5 6 7 ... 50 51This parameter enable displaying first, last and skipped pages. Number of this pages are equal to pageLimit. For example: pageLimit is 2, current page is 6 and total pages is 51 will display: 1 2 ... 5 6 7 ... 50 51',
+        'type' => 'combo-boolean',
+        'options' => '',
+        'value' => true,
     )
 );
 
