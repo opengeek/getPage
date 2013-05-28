@@ -1,11 +1,17 @@
 Changelog for getPage.
 
+getPageExt 1.3.0-pl (May 12, 2013)
+====================================
+- Project renamed to getPageExt
+- Added parameter "&sheme=`request`" for building pagination urls with respect to request url.
+  It is very helpful if you send some parameters to snippet via friendly url.
+
 getPage 1.2.4-pl (June 28, 2012)
 ====================================
 - Add ability to display fist, last and skipped pages
-- Add parameter showEdgePages for enable new mode. It set to true, by default
-- Add parameter pageSkipTpl as a placeholder of skipped pages
-- Default pageLimit value is set to 2
+- Add parameter "showEdgePages" for enable new mode. It set to true, by default
+- Add parameter "pageSkipTpl" as a placeholder of skipped pages
+- Default "pageLimit" value is set to 2
 
 getPage 1.2.3-pl (June 20, 2012)
 ====================================

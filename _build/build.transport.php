@@ -1,12 +1,5 @@
 <?php
-/**
- * getPage build script
- *
- * @package getpage
- * @subpackage build
- * @version 1.2.3-pl
- * @author Jason Coward <jason@modx.com>
- */
+
 $mtime = microtime();
 $mtime = explode(" ", $mtime);
 $mtime = $mtime[1] + $mtime[0];
@@ -15,17 +8,17 @@ set_time_limit(0);
 
 $root = dirname(dirname(__FILE__)) . '/';
 $sources= array (
-    'root' => $root,
-    'build' => $root . '_build/',
-    'lexicon' => $root . '_build/lexicon/',
-    'properties' => $root . '_build/properties/',
-    'source_core' => $root . 'core/components/getpage',
+	'root' => $root,
+	'build' => $root . '_build/',
+	'lexicon' => $root . '_build/lexicon/',
+	'properties' => $root . '_build/properties/',
+	'source_core' => $root . 'core/components/getpageext',
 );
 unset($root);
 
 /* package defines */
-define('PKG_NAME','getPage');
-define('PKG_VERSION','1.2.4');
+define('PKG_NAME','getPageExt');
+define('PKG_VERSION','1.3.0');
 define('PKG_RELEASE','pl');
 define('PKG_LNAME',strtolower(PKG_NAME));
 
@@ -48,20 +41,20 @@ $snippet= $modx->newObject('modSnippet');
 $snippet->set('name',PKG_NAME);
 $snippet->set('description', '<b>' . PKG_VERSION . '-' . PKG_RELEASE . '</b> A generic wrapper snippet for returning paged results and navigation from snippets that return limitable collections.');
 $snippet->set('category', 0);
-$snippet->set('snippet', file_get_contents($sources['source_core'] . '/snippet.getpage.php'));
-$properties = include $sources['properties'].'properties.getpage.php';
+$snippet->set('snippet', file_get_contents($sources['source_core'] . '/snippet.getpageext.php'));
+$properties = include $sources['properties'].'properties.getpageext.php';
 $snippet->setProperties($properties);
 
 /* package in snippet */
 $attributes= array(
-    xPDOTransport::UNIQUE_KEY => 'name',
-    xPDOTransport::PRESERVE_KEYS => false,
-    xPDOTransport::UPDATE_OBJECT => true,
+	xPDOTransport::UNIQUE_KEY => 'name',
+	xPDOTransport::PRESERVE_KEYS => false,
+	xPDOTransport::UPDATE_OBJECT => true,
 );
 $vehicle = $builder->createVehicle($snippet, $attributes);
 $vehicle->resolve('file',array(
-    'source' => $sources['source_core'],
-    'target' => "return MODX_CORE_PATH . 'components/';",
+	'source' => $sources['source_core'],
+	'target' => "return MODX_CORE_PATH . 'components/';",
 ));
 $builder->putVehicle($vehicle);
 unset($properties,$snippet,$vehicle);
@@ -71,9 +64,9 @@ unset($properties,$snippet,$vehicle);
 
 /* now pack in the license file, readme and setup options */
 $builder->setPackageAttributes(array(
-    'license' => file_get_contents($sources['source_core'] . '/docs/license.txt'),
-    'readme' => file_get_contents($sources['source_core'] . '/docs/readme.txt'),
-    'changelog' => file_get_contents($sources['source_core'] . '/docs/changelog.txt'),
+	'license' => file_get_contents($sources['source_core'] . '/docs/license.txt'),
+	'readme' => file_get_contents($sources['source_core'] . '/docs/readme.txt'),
+	'changelog' => file_get_contents($sources['source_core'] . '/docs/changelog.txt'),
 ));
 
 /* zip up the package */
