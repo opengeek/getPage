@@ -50,7 +50,6 @@ if ($properties['cache']) {
     switch($properties['cache']){
         case 'uri':{
             $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['cachePagePrefix'].$properties['page'] . '/' . md5($_SERVER['REQUEST_URI']);
-            echo $properties['cachePageKey'];
             break;
         }
         case 'custom':{
