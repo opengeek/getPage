@@ -121,7 +121,7 @@ $properties = array(
 		'desc' => 'Cache key generation algorithm. Available algorithms: uri, custom, modx',
 		'type' => 'textfield',
 		'options' => '',
-        'value' => 'modx',
+        'value' => 'false',
 	)
 	,array(
 		'name' => 'cachePageKey',

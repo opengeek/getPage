@@ -32,7 +32,7 @@ $properties['pageNextTpl'] = !isset($pageNextTpl) ? "<li class=\"control\"><a[[+
 $properties['pageSkipTpl'] = !isset($pageSkipTpl) ? "<li class=\"control\">...</li>" : $pageSkipTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
 if(isset($cache)){
-    $properties['cache'] = (!is_scalar($cache) || $cache=='false') ? false : (string) $cache;
+    $properties['cache'] = (!is_scalar($cache) || $cache=='false' || $cache=='0') ? false : (string) $cache;
 }else{
     $properties['cache'] = (boolean) $modx->getOption('cache_resource', null, false);
 }
@@ -70,9 +70,13 @@ if ($properties['cache']) {
 		xPDO::OPT_CACHE_HANDLER => $properties[xPDO::OPT_CACHE_HANDLER],
 		xPDO::OPT_CACHE_EXPIRES => $properties[xPDO::OPT_CACHE_EXPIRES],
 	);
+}else{
+	$properties['cacheOptions'] = array();
+	$properties['cachePageKey'] = '';
 }
+
 $cached = false;
-if ($properties['cache']) {
+if ($properties['cache'] && !empty($properties['cacheOptions']) && !empty($properties['cachePageKey'])) {
 	if ($modx->getCacheManager()) {
 		$cached = $modx->cacheManager->get($properties['cachePageKey'], $properties['cacheOptions']);
 	}
