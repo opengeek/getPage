@@ -31,7 +31,11 @@ $properties['pagePrevTpl'] = !isset($pagePrevTpl) ? "<li class=\"control\"><a[[+
 $properties['pageNextTpl'] = !isset($pageNextTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&gt;&gt;</a></li>" : $pageNextTpl;
 $properties['pageSkipTpl'] = !isset($pageSkipTpl) ? "<li class=\"control\">...</li>" : $pageSkipTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
-$properties['cache'] = isset($cache) ? (boolean) $cache : (boolean) $modx->getOption('cache_resource', null, false);
+if(isset($cache)){
+    $properties['cache'] = (!is_scalar($cache) || $cache=='false' || $cache=='0') ? false : (string) $cache;
+}else{
+    $properties['cache'] = (boolean) $modx->getOption('cache_resource', null, false);
+}
 $properties['showEdgePages'] = isset($showEdgePages) ? (boolean) $showEdgePages : false;
 if (empty($cache_key)) $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', null, 'resource');
 if (empty($cache_handler)) $properties[xPDO::OPT_CACHE_HANDLER] = $modx->getOption('cache_resource_handler', null, 'xPDOFileCache');
@@ -42,15 +46,37 @@ if ($properties['page'] == 1 && $properties['pageOneLimit'] !== $properties['act
 }
 
 if ($properties['cache']) {
-	$properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()));
+	$properties['cachePagePrefix'] = isset($cachePagePrefix) ? (string)$cachePagePrefix : '';
+    switch($properties['cache']){
+        case 'uri':{
+            $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['cachePagePrefix'].$properties['page'] . '/' . md5($_SERVER['REQUEST_URI']);
+            break;
+        }
+        case 'custom':{
+            if(empty($properties['cachePageKey'])){
+                $modx->log(modX::LOG_LEVEL_ERROR, "cachePageKey is empty");
+                $properties['cache'] = false;
+            }
+            break;
+        }
+        case 'modx':
+        default:{
+                $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['cachePagePrefix'].$properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()));
+                break;
+        }
+    }
 	$properties['cacheOptions'] = array(
 		xPDO::OPT_CACHE_KEY => $properties[xPDO::OPT_CACHE_KEY],
 		xPDO::OPT_CACHE_HANDLER => $properties[xPDO::OPT_CACHE_HANDLER],
 		xPDO::OPT_CACHE_EXPIRES => $properties[xPDO::OPT_CACHE_EXPIRES],
 	);
+}else{
+	$properties['cacheOptions'] = array();
+	$properties['cachePageKey'] = '';
 }
+
 $cached = false;
-if ($properties['cache']) {
+if ($properties['cache'] && !empty($properties['cacheOptions']) && !empty($properties['cachePageKey'])) {
 	if ($modx->getCacheManager()) {
 		$cached = $modx->cacheManager->get($properties['cachePageKey'], $properties['cacheOptions']);
 	}

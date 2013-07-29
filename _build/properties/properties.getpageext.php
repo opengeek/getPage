@@ -118,10 +118,17 @@ $properties = array(
 	)
 	,array(
 		'name' => 'cache',
-		'desc' => 'If true, unique page requests will be cached according to addition cache properties.',
-		'type' => 'combo-boolean',
+		'desc' => 'Cache key generation algorithm. Available algorithms: uri, custom, modx',
+		'type' => 'textfield',
 		'options' => '',
-		'value' => false,
+        'value' => 'false',
+	)
+	,array(
+		'name' => 'cachePageKey',
+		'desc' => 'For personalize pagination if you have more one pagination in the current document.',
+		'type' => 'textfield',
+		'options' => '',
+        'value' => '',
 	)
 	,array(
 		'name' => 'cache_key',

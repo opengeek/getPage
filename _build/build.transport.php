@@ -18,7 +18,7 @@ unset($root);
 
 /* package defines */
 define('PKG_NAME','getPageExt');
-define('PKG_VERSION','1.3.0');
+define('PKG_VERSION','1.3.2');
 define('PKG_RELEASE','pl');
 define('PKG_LNAME',strtolower(PKG_NAME));
 
