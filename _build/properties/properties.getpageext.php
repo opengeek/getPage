@@ -172,6 +172,13 @@ $properties = array(
 		'options' => '',
 		'value' => true,
 	)
+	,array(
+		'name' => 'strictMode',
+		'desc' => 'This parameter enables redirect to the first page, if $_GET[pageVarKey] is not numeric or exceeds total number of available pages.',
+		'type' => 'combo-boolean',
+		'options' => '',
+		'value' => true,
+	)
 );
 
 return $properties;

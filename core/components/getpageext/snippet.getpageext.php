@@ -1,11 +1,19 @@
 <?php
 /**
  * @package getpage
+ * @var array $scriptProperties
  */
+include_once $modx->getOption('getpageext.core_path',$scriptProperties,$modx->getOption('core_path', $scriptProperties, MODX_CORE_PATH) . 'components/getpageext/').'include.getpageext.php';
+
 $output = '';
 
 $properties =& $scriptProperties;
+$strictMode = !empty($strictMode);
+if ($strictMode && isset($_GET[$properties['pageVarKey']]) && !is_numeric($_GET[$properties['pageVarKey']])) {
+	redirectToFirst($modx, $properties);
+}
 $properties['page'] = (isset($_GET[$properties['pageVarKey']]) && ($page = intval($_GET[$properties['pageVarKey']]))) ? $page : null;
+
 if ($properties['page'] === null) {
 	$properties['page'] = (isset($_REQUEST[$properties['pageVarKey']]) && ($page = intval($_REQUEST[$properties['pageVarKey']]))) ? $page : 1;
 }
@@ -32,9 +40,9 @@ $properties['pageNextTpl'] = !isset($pageNextTpl) ? "<li class=\"control\"><a[[+
 $properties['pageSkipTpl'] = !isset($pageSkipTpl) ? "<li class=\"control\">...</li>" : $pageSkipTpl;
 $properties['toPlaceholder'] = !empty($toPlaceholder) ? $toPlaceholder : '';
 if(isset($cache)){
-    $properties['cache'] = (!is_scalar($cache) || $cache=='false' || $cache=='0') ? false : (string) $cache;
+	$properties['cache'] = (!is_scalar($cache) || $cache=='false' || $cache=='0') ? false : (string) $cache;
 }else{
-    $properties['cache'] = (boolean) $modx->getOption('cache_resource', null, false);
+	$properties['cache'] = (boolean) $modx->getOption('cache_resource', null, false);
 }
 $properties['showEdgePages'] = isset($showEdgePages) ? (boolean) $showEdgePages : false;
 if (empty($cache_key)) $properties[xPDO::OPT_CACHE_KEY] = $modx->getOption('cache_resource_key', null, 'resource');
@@ -47,24 +55,24 @@ if ($properties['page'] == 1 && $properties['pageOneLimit'] !== $properties['act
 
 if ($properties['cache']) {
 	$properties['cachePagePrefix'] = isset($cachePagePrefix) ? (string)$cachePagePrefix : '';
-    switch($properties['cache']){
-        case 'uri':{
-            $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['cachePagePrefix'].$properties['page'] . '/' . md5($_SERVER['REQUEST_URI']);
-            break;
-        }
-        case 'custom':{
-            if(empty($properties['cachePageKey'])){
-                $modx->log(modX::LOG_LEVEL_ERROR, "cachePageKey is empty");
-                $properties['cache'] = false;
-            }
-            break;
-        }
-        case 'modx':
-        default:{
-                $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['cachePagePrefix'].$properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()));
-                break;
-        }
-    }
+	switch($properties['cache']){
+		case 'uri':{
+			$properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['cachePagePrefix'].$properties['page'] . '/' . md5($_SERVER['REQUEST_URI']);
+			break;
+		}
+		case 'custom':{
+			if(empty($properties['cachePageKey'])){
+				$modx->log(modX::LOG_LEVEL_ERROR, "cachePageKey is empty");
+				$properties['cache'] = false;
+			}
+			break;
+		}
+		case 'modx':
+		default:{
+				$properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['cachePagePrefix'].$properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()));
+				break;
+		}
+	}
 	$properties['cacheOptions'] = array(
 		xPDO::OPT_CACHE_KEY => $properties[xPDO::OPT_CACHE_KEY],
 		xPDO::OPT_CACHE_HANDLER => $properties[xPDO::OPT_CACHE_HANDLER],
@@ -93,13 +101,16 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
 		}
 	}
 
-	include_once $modx->getOption('getpageext.core_path',$properties,$modx->getOption('core_path', $properties, MODX_CORE_PATH) . 'components/getpageext/').'include.getpageext.php';
-
 	$qs = $modx->request->getParameters();
 	$properties['qs'] =& $qs;
 
 	$totalSet = $modx->getPlaceholder($properties['totalVar']);
 	$properties['total'] = (($totalSet = intval($totalSet)) ? $totalSet : $properties['total']);
+	// Redirect to the first page
+	if ($strictMode && empty($output) && !empty($totalSet)) {
+		redirectToFirst($modx, $properties);
+	}
+
 	if (!empty($properties['total']) && !empty($properties['actualLimit'])) {
 		if ($properties['pageOneLimit'] !== $properties['actualLimit']) {
 			$adjustedTotal = $properties['total'] - $properties['pageOneLimit'];

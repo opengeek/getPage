@@ -1,5 +1,9 @@
 Changelog for getPage.
 
+getPageExt 1.3.3-pl (Jule 30, 2013)
+====================================
+- Added parameter "strictMode". It enabled by default.
+
 getPageExt 1.3.2-pl (June 14, 2013)
 ====================================
 - Caching is disabled by default

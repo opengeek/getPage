@@ -81,3 +81,14 @@ function gpe_makeUrl(& $modx, $properties, $pageNo, $tpl) {
 	$nav= $modx->newObject('modChunk')->process($properties, $tpl);
 	return $nav;
 }
+
+
+function redirectToFirst(modX $modx, $properties) {
+	unset(
+		$_GET[$properties['pageVarKey']]
+		,$_GET[$modx->getOption('request_param_alias',null,'q')]
+	);
+	$url = $modx->makeUrl($modx->resource->id, $modx->resource->context_key, $_GET, 'full');
+
+	$modx->sendRedirect($url);
+}
