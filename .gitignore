@@ -1,9 +1,2 @@
-_build/build.config.php
 .idea
-.buildpath
-.project
-.settings/
-nbproject/
-.htaccess
-web.config
 .DS_Store
