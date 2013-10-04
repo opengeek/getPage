@@ -24,6 +24,7 @@ $modx= new modX();
 $modx->initialize('mgr');
 $modx->setLogLevel(modX::LOG_LEVEL_INFO);
 $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
+$modx->getService('error','error.modError');
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
@@ -105,7 +106,10 @@ if (defined('PKG_AUTO_INSTALL') && PKG_AUTO_INSTALL) {
 		}
 		$package->save();
 	}
-	$package->install();
+
+	if ($package->install()) {
+		$modx->runProcessor('system/clearcache');
+	}
 }
 
 $modx->log(modX::LOG_LEVEL_INFO,"\n<br />Execution time: {$totalTime}\n");
