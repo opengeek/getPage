@@ -15,7 +15,7 @@ if ($properties['limit'] === null) {
 }
 $properties['offset'] = (!empty($properties['limit']) && !empty($properties['page'])) ? ($properties['limit'] * ($properties['page'] - 1)) : 0;
 $properties['totalVar'] = empty($totalVar) ? "total" : $totalVar;
-$properties['total'] = !empty($properties['total']) && $total = intval($properties['total']) ? $total : 0;
+$properties[$properties['totalVar']] = !empty($properties[$properties['totalVar']]) && $total = intval($properties[$properties['totalVar']]) ? $total : 0;
 $properties['pageOneLimit'] = (!empty($pageOneLimit) && $pageOneLimit = intval($pageOneLimit)) ? $pageOneLimit : $properties['limit'];
 $properties['actualLimit'] = $properties['limit'];
 $properties['pageLimit'] = isset($pageLimit) && is_numeric($pageLimit) ? intval($pageLimit) : 5;
@@ -71,18 +71,18 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
     $properties['qs'] =& $qs;
 
     $totalSet = $modx->getPlaceholder($properties['totalVar']);
-    $properties['total'] = (($totalSet = intval($totalSet)) ? $totalSet : $properties['total']);
-    if (!empty($properties['total']) && !empty($properties['actualLimit'])) {
+    $properties[$properties['totalVar']] = (($totalSet = intval($totalSet)) ? $totalSet : $properties[$properties['totalVar']]);
+    if (!empty($properties[$properties['totalVar']]) && !empty($properties['actualLimit'])) {
         if ($properties['pageOneLimit'] !== $properties['actualLimit']) {
-            $adjustedTotal = $properties['total'] - $properties['pageOneLimit'];
+            $adjustedTotal = $properties[$properties['totalVar']] - $properties['pageOneLimit'];
             $properties['pageCount'] = $adjustedTotal > 0 ? ceil($adjustedTotal / $properties['actualLimit']) + 1 : 1;
         } else {
-            $properties['pageCount'] = ceil($properties['total'] / $properties['actualLimit']);
+            $properties['pageCount'] = ceil($properties[$properties['totalVar']] / $properties['actualLimit']);
         }
     } else {
         $properties['pageCount'] = 1;
     }
-    if (empty($properties['total']) || empty($properties['actualLimit']) || $properties['total'] <= $properties['actualLimit'] || ($properties['page'] == 1 && $properties['total'] <= $properties['pageOneLimit'])) {
+    if (empty($properties[$properties['totalVar']]) || empty($properties['actualLimit']) || $properties[$properties['totalVar']] <= $properties['actualLimit'] || ($properties['page'] == 1 && $properties[$properties['totalVar']] <= $properties['pageOneLimit'])) {
         $properties['page'] = 1;
     } else {
         $pageNav = getpage_buildControls($modx, $properties);
