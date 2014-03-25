@@ -40,7 +40,7 @@ if ($properties['page'] == 1 && $properties['pageOneLimit'] !== $properties['act
 }
 
 if ($properties['cache']) {
-    $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()));
+    $properties['cachePageKey'] = $modx->resource->getCacheKey() . '/' . $properties['page'] . '/' . md5(http_build_query($modx->request->getParameters()) . http_build_query($scriptProperties));
     $properties['cacheOptions'] = array(
         xPDO::OPT_CACHE_KEY => $properties[xPDO::OPT_CACHE_KEY],
         xPDO::OPT_CACHE_HANDLER => $properties[xPDO::OPT_CACHE_HANDLER],
@@ -91,7 +91,7 @@ if (empty($cached) || !isset($cached['properties']) || !isset($cached['output'])
             $qs[$properties['pageVarKey']] = $properties['page'];
         }
     }
-    
+
     $properties['firstItem'] = $properties['offset'] + 1;
     $properties['lastItem'] = ($properties['offset'] + $properties['limit']) < $totalSet ? ($properties['offset'] + $properties['limit']) : $totalSet;
 
