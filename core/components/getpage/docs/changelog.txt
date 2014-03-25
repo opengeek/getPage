@@ -1,5 +1,7 @@
 Changelog for getPage.
 
+- [#24] Cache total results number into correct variable name
+
 getPage 1.2.3-pl (June 20, 2012)
 ====================================
 - [#15] Add ability to specify pageNavScheme for navigation links
