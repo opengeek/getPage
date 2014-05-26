@@ -32,7 +32,7 @@ function getpage_buildControls(& $modx, $properties) {
                 $nav['last'] = getpage_makeUrl($modx, $properties, $i, $pageLastTpl);
             }
         }
-        $nav['pages'] = implode("\n", $nav['pages']);
+        $nav['pages'] = implode("", $nav['pages']);
     }
     return $nav;
 }
