@@ -151,6 +151,20 @@ $properties = array(
         'options' => '',
         'value' => '',
     )
+    ,array(
+        'name' => 'placeholderNav',
+        'desc' => 'Wether or not to display placeholder nav\'s when there is no way to go',
+        'type' => 'combo-boolean',
+        'options' => '',
+        'value' => 'true',
+    )
+    ,array(
+        'name' => 'placeholderClasses',
+        'desc' => 'Classes to apply on placeholder nav\'s',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => 'disabled',
+    )
 );
 
 return $properties;
