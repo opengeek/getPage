@@ -17,7 +17,15 @@ function getpage_buildControls(& $modx, $properties) {
                     $nav['prev'] = getpage_makeUrl($modx, $properties, $page - 1, $pagePrevTpl);
                 }
             }
-            if (empty($pageLimit) || ($i >= $page - $pageLimit && $i <= $page + $pageLimit)) {
+            $halfPageLimit = $secondHalfPageLimit = ($pageLimit - ($pageLimit%2)) / 2;
+            if ($halfPageLimit == $pageLimit / 2) $halfPageLimit = $halfPageLimit - 1;
+            if ($pageLimit > $page + $secondHalfPageLimit) {
+                $secondHalfPageLimit = $secondHalfPageLimit - ($page - $halfPageLimit - 1);
+            }
+            if ($pageCount < $page + $secondHalfPageLimit) {
+                $halfPageLimit = $halfPageLimit + ($page + $secondHalfPageLimit - $pageCount);
+            }
+            if (empty($pageLimit) || ($i >= $page - $halfPageLimit && $i <= $page + $secondHalfPageLimit)) {
                 if (!array_key_exists('pages', $nav)) $nav['pages'] = array();
                 if ($i == $page) {
                     $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl);
