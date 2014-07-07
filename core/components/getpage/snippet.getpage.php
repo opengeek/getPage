@@ -22,9 +22,9 @@ $properties['pageLimit'] = isset($pageLimit) && is_numeric($pageLimit) ? intval(
 $properties['element'] = empty($element) ? '' : $element;
 $properties['elementClass'] = empty($elementClass) ? 'modChunk' : $elementClass;
 $properties['pageNavVar'] = empty($pageNavVar) ? 'page.nav' : $pageNavVar;
-$properties['pageNavTpl'] = !isset($pageNavTpl) ? "<li[[+classes]]><a[[+classes]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageNavTpl;
+$properties['pageNavTpl'] = !isset($pageNavTpl) ? "<li [[+classes]]><a [[+classes]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageNavTpl;
 $properties['pageNavOuterTpl'] = !isset($pageNavOuterTpl) ? "[[+first]][[+prev]][[+pages]][[+next]][[+last]]" : $pageNavOuterTpl;
-$properties['pageActiveTpl'] = !isset($pageActiveTpl) ? "<li[[+activeClasses:default=` class=\"active\"`]]><a[[+activeClasses:default=` class=\"active\"`]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageActiveTpl;
+$properties['pageActiveTpl'] = !isset($pageActiveTpl) ? "<li [[+activeClasses:default=` class=\"active\"`]]><a[[+activeClasses:default=` class=\"active\"`]][[+title]] href=\"[[+href]]\">[[+pageNo]]</a></li>" : $pageActiveTpl;
 $properties['pageFirstTpl'] = !isset($pageFirstTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">First</a></li>" : $pageFirstTpl;
 $properties['pageLastTpl'] = !isset($pageLastTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">Last</a></li>" : $pageLastTpl;
 $properties['pagePrevTpl'] = !isset($pagePrevTpl) ? "<li class=\"control\"><a[[+title]] href=\"[[+href]]\">&lt;&lt;</a></li>" : $pagePrevTpl;
