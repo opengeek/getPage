@@ -13,7 +13,7 @@ $properties['limit'] = (isset($_GET['limit'])) ? intval($_GET['limit']) : null;
 if ($properties['limit'] === null) {
     $properties['limit'] = (isset($_REQUEST['limit'])) ? intval($_REQUEST['limit']) : intval($limit);
 }
-$properties['offset'] = (!empty($properties['limit']) && !empty($properties['page'])) ? ($properties['limit'] * ($properties['page'] - 1)) : 0;
+$properties['offset'] = ((!empty($properties['limit']) && !empty($properties['page'])) ? ($properties['limit'] * ($properties['page'] - 1)) : 0) + (!empty($properties['offset']) ? $properties['offset'] : 0);
 $properties['totalVar'] = empty($totalVar) ? "total" : $totalVar;
 $properties[$properties['totalVar']] = !empty($properties[$properties['totalVar']]) && $total = intval($properties[$properties['totalVar']]) ? $total : 0;
 $properties['pageOneLimit'] = (!empty($pageOneLimit) && $pageOneLimit = intval($pageOneLimit)) ? $pageOneLimit : $properties['limit'];
