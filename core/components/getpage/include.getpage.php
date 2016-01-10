@@ -39,13 +39,30 @@ function getpage_buildControls(& $modx, $properties) {
 
 function getpage_makeUrl(& $modx, $properties, $pageNo, $tpl) {
     $qs = $properties['qs'];
-    if ($pageNo === 1) {
-        unset($qs[$properties['pageVarKey']]);
-    } else {
-        $qs[$properties['pageVarKey']] = $pageNo;
-    }
     $scheme = !empty($properties['pageNavScheme']) ? $properties['pageNavScheme'] : $modx->getOption('link_tag_scheme', $properties, -1);
-    $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', $qs, $scheme);
+    
+    if ($properties['pageNavScheme'] === 'path') {
+        
+        unset($qs[$properties['pageVarKey']]);
+        $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', '', $modx->getOption('link_tag_scheme', $properties, -1));
+        if ($pageNo !== 1) {
+            $properties['href'] = rtrim($properties['href'], '/').$properties['pathUrlSeparator'];
+            if (!$properties['pathHidePageVarKey']) $properties['href'] .= $properties['pageVarKey'].$properties['pathNumberSeparator'];
+            $properties['href'] .= $pageNo;
+        }
+        if (!empty($qs)) $properties['href'] .= '?'. http_build_query($qs);
+        
+    } else {
+        
+        if ($pageNo === 1) {
+            unset($qs[$properties['pageVarKey']]);
+        } else {
+            $qs[$properties['pageVarKey']] = $pageNo;
+        }
+        $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', $qs, $scheme);
+        
+    }
+    
     $properties['pageNo'] = $pageNo;
     $nav= $modx->newObject('modChunk')->process($properties, $tpl);
     return $nav;

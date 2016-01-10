@@ -150,6 +150,24 @@ $properties = array(
         'type' => 'textfield',
         'options' => '',
         'value' => '',
+    ),array(
+        'name' => 'pathUrlSeparator',
+        'desc' => 'If you use "path" as pageNavScheme this sets the separator between the resources URI and the pagination path.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '/',
+    ),array(
+        'name' => 'pathNumberSeparator',
+        'desc' => 'Separator between pageVarKey and page number if you use "path" as pageNavScheme.',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '-',
+    ),array(
+        'name' => 'pathHidePageVarKey',
+        'desc' => 'Optionally hide the pageVarKey from the pagination path',
+        'type' => 'combo-boolean',
+        'options' => '',
+        'value' => false,
     )
 );
 
