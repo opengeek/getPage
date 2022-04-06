@@ -12,24 +12,24 @@ function getpage_buildControls(& $modx, $properties) {
     if ($pageCount > 1 && !empty($pageNavTpl)) {
         for ($i = 1; $i <= $pageCount; $i++) {
             if ($i == 1 && $i != $page && !empty($pageFirstTpl)) {
-                $nav['first'] = getpage_makeUrl($modx, $properties, $i, $pageFirstTpl);
+                $nav['first'] = getpage_makeUrl($modx, $properties, $i, $pageFirstTpl, 'pageFirstTpl');
                 if (!empty($pagePrevTpl) && ($page - 1) >= 1) {
-                    $nav['prev'] = getpage_makeUrl($modx, $properties, $page - 1, $pagePrevTpl);
+                    $nav['prev'] = getpage_makeUrl($modx, $properties, $page - 1, $pagePrevTpl, 'pagePrevTpl');
                 }
             }
             if (empty($pageLimit) || ($i >= $page - $pageLimit && $i <= $page + $pageLimit)) {
                 if (!array_key_exists('pages', $nav)) $nav['pages'] = array();
                 if ($i == $page) {
-                    $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl);
+                    $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl, 'pageActiveTpl');
                 } else {
-                    $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl);
+                    $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageNavTpl, 'pageNavTpl');
                 }
             }
             if ($i == $pageCount && $i != $page && !empty($pageLastTpl)) {
                 if (!empty($pageNextTpl) && ($page + 1) <= $pageCount) {
-                    $nav['next'] = getpage_makeUrl($modx, $properties, $page + 1, $pageNextTpl);
+                    $nav['next'] = getpage_makeUrl($modx, $properties, $page + 1, $pageNextTpl, 'pageNextTpl');
                 }
-                $nav['last'] = getpage_makeUrl($modx, $properties, $i, $pageLastTpl);
+                $nav['last'] = getpage_makeUrl($modx, $properties, $i, $pageLastTpl, 'pageLastTpl');
             }
         }
         $nav['pages'] = implode("\n", $nav['pages']);
@@ -37,7 +37,7 @@ function getpage_buildControls(& $modx, $properties) {
     return $nav;
 }
 
-function getpage_makeUrl(& $modx, $properties, $pageNo, $tpl) {
+function getpage_makeUrl(& $modx, $properties, $pageNo, $tpl, $tplName) {
     $qs = $properties['qs'];
     if ($pageNo === 1) {
         unset($qs[$properties['pageVarKey']]);
@@ -47,6 +47,8 @@ function getpage_makeUrl(& $modx, $properties, $pageNo, $tpl) {
     $scheme = !empty($properties['pageNavScheme']) ? $properties['pageNavScheme'] : $modx->getOption('link_tag_scheme', $properties, -1);
     $properties['href'] = $modx->makeUrl($modx->resource->get('id'), '', $qs, $scheme);
     $properties['pageNo'] = $pageNo;
-    $nav= $modx->newObject('modChunk')->process($properties, $tpl);
+    $chunk = $modx->newObject('modChunk');
+    $chunk->set('name', $tplName);
+    $nav = $chunk->process($properties, $tpl);
     return $nav;
 }
