@@ -4,7 +4,7 @@
  *
  * @package getpage
  * @subpackage build
- * @version 1.2.4-pl
+ * @version 1.2.5-pl
  * @author Jason Coward <jason@modx.com>
  */
 $mtime = microtime();

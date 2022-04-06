@@ -1,5 +1,9 @@
 Changelog for getPage.
 
+getPage 1.2.5-pl (April 6, 2022)
+====================================
+- [#36] Avoid cached page navigation in MODX 3.x
+
 getPage 1.2.4-pl (March 24, 2014)
 ====================================
 - [#19] Add scriptProperties to cachePageKey signature
