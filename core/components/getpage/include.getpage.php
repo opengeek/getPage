@@ -3,7 +3,9 @@
  * @package getpage
  */
 function getpage_buildControls(& $modx, $properties) {
-    $nav = array();
+    $nav = array(
+        'pages' => array()
+    );
     $qs = !empty($properties['qs']) ? $properties['qs'] : array();
     $page = !empty($properties['page']) ? $properties['page'] : 1;
     $pageCount = !empty($properties['pageCount']) ? $properties['pageCount'] : 1;
@@ -18,7 +20,6 @@ function getpage_buildControls(& $modx, $properties) {
                 }
             }
             if (empty($pageLimit) || ($i >= $page - $pageLimit && $i <= $page + $pageLimit)) {
-                if (!array_key_exists('pages', $nav)) $nav['pages'] = array();
                 if ($i == $page) {
                     $nav['pages'][$i] = getpage_makeUrl($modx, $properties, $i, $pageActiveTpl, 'pageActiveTpl');
                 } else {
